@@ -1,6 +1,7 @@
 import React, { useContext } from "react";
 import Todo from "./Todo";
 import { Context } from "../context";
+import axios from "axios";
 
 const Todos = () => {
   const [todos, setTodos] = useContext(Context);
@@ -8,20 +9,22 @@ const Todos = () => {
   const completeTask = (index) => (e) => {
     const todo = [...todos];
     todo[index].complete = todo[index].complete ? false : true;
-
-    setTodos(todo);
+    axios
+      .put(`/todos/${todo[index]._id}`, { complete: todo[index].complete })
+      .then(() => setTodos(todo));
   };
 
   const deleteTask = (index) => (e) => {
     let todo = [...todos];
     todo = todo.filter((t, i) => i !== index);
-    setTodos(todo);
+    axios.delete(`/todos/${todos[index]._id}`).then(() => setTodos(todo));
   };
   const checkTask = (index) => (e) => {
     const todo = [...todos];
     todo[index].complete = todo[index].complete ? false : true;
-
-    setTodos(todo);
+    axios
+      .put(`/todos/${todo[index]._id}`, { complete: todo[index].complete })
+      .then(() => setTodos(todo));
   };
   return (
     <div>

@@ -1,5 +1,7 @@
+import Axios from "axios";
 import React, { useContext, useState } from "react";
 import { Context } from "../context";
+import axios from "axios";
 const Addtodo = () => {
   const [newTodo, setNewTodo] = useState("");
   const [todos, setTodos] = useContext(Context);
@@ -8,10 +10,18 @@ const Addtodo = () => {
     e.preventDefault();
     if (newTodo !== "") {
       const todo = [...todos];
-      console.log(todos.length);
-      todo.push({ id: todo.length + 1, title: newTodo, complete: false });
-      setTodos(todo);
-      setNewTodo("");
+      const newTodoObj = {
+        id: todo.length + 1,
+        title: newTodo,
+        complete: false,
+      };
+      //todo.push(newTodoObj);
+      axios.post("/todos", newTodoObj).then((res) => {
+        console.log("data ", res.data);
+        todo.push(res.data);
+        setTodos(todo);
+        setNewTodo("");
+      });
     }
   };
 

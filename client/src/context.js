@@ -1,26 +1,13 @@
-import React, { useState, createContext } from "react";
-
+import React, { useState, createContext, useEffect } from "react";
+import axios from "axios";
 export const Context = createContext();
 
 export const Provider = (props) => {
-  const [todos, setTodos] = useState([
-    {
-      id: 1,
-      title: "check emails",
-      complete: true,
-    },
-    {
-      id: 2,
-      title: "check voicemail",
-      complete: false,
-    },
-    {
-      id: 3,
-      title: "check calls",
-      complete: false,
-    },
-  ]);
-
+  const [todos, setTodos] = useState([]);
+  useEffect(() => {
+    axios.get("/todos").then((res) => setTodos(res.data));
+    console.log("mount it!");
+  }, []);
   return (
     <Context.Provider value={[todos, setTodos]}>
       {props.children}
