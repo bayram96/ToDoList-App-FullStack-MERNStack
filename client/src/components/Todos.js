@@ -1,11 +1,13 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import Todo from "./Todo";
 import { Context } from "../context";
 import axios from "axios";
 
 const Todos = () => {
   const [todos, setTodos] = useContext(Context);
-
+  // useEffect(() => {
+  //   console.log("Search: ", todos);
+  // }, [todos]);
   const completeTask = (index) => (e) => {
     const todo = [...todos];
     todo[index].complete = todo[index].complete ? false : true;
